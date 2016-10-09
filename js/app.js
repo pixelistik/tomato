@@ -9,7 +9,8 @@ window.vm = new Vue({
         workStartedTime: false,
         pauseStartedTime: false,
         now: new Date(),
-        timer: false
+        timer: false,
+        notificationShown: false
     },
     created: function () {
         this.timer = setInterval(this.updateTimes, 1000);
@@ -22,12 +23,32 @@ window.vm = new Vue({
         updateTimes: function () {
             console.debug("Updating");
             this.now = new Date();
+            if (this.workingTime > 10 && !this.notificationShown) {
+                showNotification();
+                this.notificationShown = true;
+            }
         }
     },
     computed: {
         workingTime: function () {
+            if (!this.workStartedTime) return 0;
             return Math.round((this.now - this.workStartedTime) / 1000);
         }
     }
 
 });
+
+function showNotification() {
+    Notification.requestPermission(function (result) {
+        if (result === "granted") {
+            navigator.serviceWorker.ready.then(function (registration) {
+                registration.showNotification("Start a pause", {
+                    body: "Buzz! Buzz!",
+                    icon: "apple-touch-icon.png",
+                    vibrate: [200, 100, 200, 100, 200, 100, 200],
+                    tag: "vibration-sample"
+                });
+            });
+        }
+    });
+}

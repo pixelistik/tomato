@@ -17,7 +17,7 @@ self.addEventListener('install', e => {
           TO THIS ARRAY OF URLS
         */
       ]).then(() => self.skipWaiting());
-    })
+    });
   );
 });
 
