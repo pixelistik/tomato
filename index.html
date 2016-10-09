@@ -20,8 +20,13 @@
         </script>
     </head>
     <body>
-        <!-- Add your site or application content here -->
-        <p>Hello world! This is HTML5 Boilerplate.</p>
+        <div id="app">
+            <h1>{{ title }}</h1>
+            <div v-if="workStartedTime">
+                You have been working for {{ workingTime }} seconds.
+            </div>
+            <button v-on:click="startWorking">Start working</button>
+        </div>
 
         <script src="js/bundle.js"></script>
     </body>

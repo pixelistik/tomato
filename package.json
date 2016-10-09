@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack ./js/app.js ./js/bundle.js"
+    "build": "webpack ./js/app.js ./js/bundle.js",
+    "build:watch": "webpack --progress --colors --watch ./js/app.js ./js/bundle.js"
   },
   "author": "",
   "license": "MIT",
