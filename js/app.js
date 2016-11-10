@@ -1,6 +1,8 @@
 "use strict";
 
 var Vue = require("vue");
+var Log = require("./log.js")();
+var log = new Log();
 
 window.vm = new Vue({
     el: "#app",
@@ -10,7 +12,37 @@ window.vm = new Vue({
         pauseStartedTime: false,
         now: new Date(),
         timer: false,
-        notificationShown: false
+        notificationShown: false,
+        entries: [
+            {
+                type: log.START_WORK,
+                time: Date.parse("2016-01-01T12:00:00")
+            },
+            {
+                type: log.START_PAUSE,
+                time: Date.parse("2016-01-01T12:01:00")
+            },
+            {
+                type: log.FINISH_PAUSE,
+                time: Date.parse("2016-01-01T12:02:00")
+            },{
+                type: log.FINISH_PAUSE,
+                time: Date.parse("2016-09-09T23:12:34")
+            },
+            {
+                type: log.START_WORK,
+                time: Date.parse("2016-01-01T12:00:00")
+            },
+            {
+                type: log.START_PAUSE,
+                time: Date.parse("2016-01-01T12:26:00")
+            },
+            {
+                type: log.FINISH_PAUSE,
+                time: Date.parse("2016-01-01T12:32:00")
+            }
+        ],
+        log: new Log()
     },
     created: function () {
         this.timer = setInterval(this.updateTimes, 1000);
@@ -33,6 +65,9 @@ window.vm = new Vue({
         workingTime: function () {
             if (!this.workStartedTime) return 0;
             return Math.round((this.now - this.workStartedTime) / 1000);
+        },
+        tomatoes: function () {
+            return this.log.tomatoes(this.entries);
         }
     }
 
