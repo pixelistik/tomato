@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha test/",
+    "test:debug": "echo 'Use `debugger` in code to set a breakpoint.' && node_modules/.bin/devtool node_modules/.bin/_mocha",
     "build": "webpack ./js/app.js ./js/bundle.js",
     "build:watch": "webpack --progress --colors --watch ./js/app.js ./js/bundle.js"
   },
@@ -14,6 +15,9 @@
     "vue": "~2.0.1"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
+    "devtool": "^2.3.0",
+    "mocha": "^3.1.2",
     "webpack": "~1.13.2"
   }
 }
