@@ -5,6 +5,28 @@ var LogFactory = function () {
         this.WORK_TIME = 25 * 60 * 1000;
         this.PAUSE_TIME = 5 * 60 * 1000;
 
+        this.isValidTomato = function (entry1, entry2, entry3) {
+            if (entry1.type !== this.START_WORK) {
+                return false;
+            }
+
+            if (
+                typeof entry2 !== "undefined" &&
+                entry2.type !== this.START_PAUSE
+            ) {
+                return false;
+            }
+
+            if (
+                typeof entry3 !== "undefined" &&
+                entry3.type !== this.FINISH_PAUSE
+            ) {
+                return false;
+            }
+
+            return true;
+        };
+
         var isCompleteTomato = function (entry1, entry2, entry3) {
             if (!(
                 entry1 && entry1.type === this.START_WORK &&
@@ -24,7 +46,7 @@ var LogFactory = function () {
             var tomatoes = [];
 
             logEntries.forEach(function (entry, index) {
-                if (entry.type === this.START_WORK) {
+                if (this.isValidTomato(logEntries[index], logEntries[index + 1], logEntries[index + 2])) {
                     tomatoes.push(
                         {
                             complete: isCompleteTomato(logEntries[index], logEntries[index + 1], logEntries[index + 2])
@@ -36,9 +58,9 @@ var LogFactory = function () {
             return tomatoes;
         }.bind(this);
 
-        this.START_WORK = 0;
-        this.START_PAUSE = 1;
-        this.FINISH_PAUSE = 2;
+        this.START_WORK = 1;
+        this.START_PAUSE = 2;
+        this.FINISH_PAUSE = 3;
 
     };
 

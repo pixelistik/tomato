@@ -48,9 +48,29 @@ window.vm = new Vue({
         this.timer = setInterval(this.updateTimes, 1000);
     },
     methods: {
-        startWorking: function () {
+        startWork: function () {
             console.debug("startng to work");
             this.workStartedTime = new Date();
+            this.entries.push({
+                type: log.START_WORK,
+                time: new Date()
+            });
+        },
+        startPause: function () {
+            console.debug("startng to pause");
+            this.workStartedTime = new Date();
+            this.entries.push({
+                type: log.START_PAUSE,
+                time: new Date()
+            });
+        },
+        finishPause: function () {
+            console.debug("finish pause");
+            this.workStartedTime = new Date();
+            this.entries.push({
+                type: log.FINISH_PAUSE,
+                time: new Date()
+            });
         },
         updateTimes: function () {
             console.debug("Updating");

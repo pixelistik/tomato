@@ -30,7 +30,9 @@
             <div v-if="workStartedTime">
                 You have been working for {{ workingTime }} seconds.
             </div>
-            <button v-on:click="startWorking">Start working</button>
+            <button v-on:click="startWork">Start work</button>
+            <button v-on:click="startPause">Start pause</button>
+            <button v-on:click="finishPause">Finish pause</button>
         </div>
 
         <script src="js/bundle.js"></script>

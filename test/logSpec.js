@@ -3,6 +3,73 @@
 var assert = require("chai").assert;
 var Log = require("../js/log.js")();
 
+describe("Validity", function () {
+    var log = new Log();
+
+    it("should treat a single START_WORK event as valid tomato", function () {
+        var result = log.isValidTomato(
+            {type: log.START_WORK}
+        );
+
+        assert.equal(result, true);
+    });
+
+    it("should treat a last START_PAUSE event as valid tomato", function () {
+        var result = log.isValidTomato(
+            {type: log.START_WORK},
+            {type: log.START_PAUSE}
+        );
+
+        assert.equal(result, true);
+    });
+
+    it("should treat a last FINISH_PAUSE event as valid tomato", function () {
+        var result = log.isValidTomato(
+            {type: log.START_WORK},
+            {type: log.START_PAUSE},
+            {type: log.FINISH_PAUSE}
+        );
+
+        assert.equal(result, true);
+    });
+
+    it("should treat a single START_PAUSE event NOT as valid tomato", function () {
+        var result = log.isValidTomato(
+            {type: log.START_PAUSE}
+        );
+
+        assert.equal(result, false);
+    });
+
+    it("should treat a single FINISH_PAUSE event NOT as valid tomato", function () {
+        var result = log.isValidTomato(
+            {type: log.FINISH_PAUSE}
+        );
+
+        assert.equal(result, false);
+    });
+
+    it("should treat multiple START_WORK events NOT as valid tomato", function () {
+        var result = log.isValidTomato(
+            {type: log.START_WORK},
+            {type: log.START_WORK},
+            {type: log.START_WORK}
+        );
+
+        assert.equal(result, false);
+    });
+
+    it("should treat multiple START_PAUSE events NOT as valid tomato", function () {
+        var result = log.isValidTomato(
+            {type: log.START_WORK},
+            {type: log.START_PAUSE},
+            {type: log.START_PAUSE}
+        );
+
+        assert.equal(result, false);
+    });
+});
+
 describe("Mapping log entries to finished/unfinished tomatoes", function () {
     it("should convert 1 finished tomato correctly", function () {
         var log = new Log();
