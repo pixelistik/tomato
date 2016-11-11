@@ -6,7 +6,7 @@ var Log = require("../js/log.js")();
 describe("Mapping log entries to finished/unfinished tomatoes", function () {
     it("should convert 1 finished tomato correctly", function () {
         var log = new Log();
-        debugger;
+
         var entries = [
             {
                 type: log.START_WORK,
@@ -86,6 +86,26 @@ describe("Mapping log entries to finished/unfinished tomatoes", function () {
         var expected = [
             {
                 complete: true
+            }
+        ];
+
+        assert.deepEqual(result, expected);
+    });
+
+    it("should not throw exception on unfinished tomato", function () {
+        var log = new Log();
+
+        var entries = [
+            {
+                type: log.START_WORK,
+                time: Date.parse("2016-01-01T12:00:00")
+            }
+        ];
+
+        var result = log.tomatoes(entries);
+        var expected = [
+            {
+                complete: false
             }
         ];
 

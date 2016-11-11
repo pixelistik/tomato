@@ -7,9 +7,9 @@ var LogFactory = function () {
 
         var isCompleteTomato = function (entry1, entry2, entry3) {
             if (!(
-                entry1.type === this.START_WORK &&
-                entry2.type === this.START_PAUSE &&
-                entry3.type === this.FINISH_PAUSE
+                entry1 && entry1.type === this.START_WORK &&
+                entry2 && entry2.type === this.START_PAUSE &&
+                entry3 && entry3.type === this.FINISH_PAUSE
             )) {
                 return false;
             }
